@@ -8,34 +8,43 @@ var dotenv_1 = __importDefault(require("dotenv"));
 var yargs = require('yargs');
 // Load environment variables from .env file
 dotenv_1.default.config({ path: ".env" });
+// Controllers
+var cli_1 = __importDefault(require("./controllers/cli"));
 var App = /** @class */ (function () {
     function App() {
         this.express = express_1.default();
         this.command = yargs.argv._[0];
         this.commandList();
-        // this.handleCommand()
+        this.handleCommand();
     }
+    // list of available commands
     App.prototype.commandList = function () {
         yargs
             .command('search', 'search stuff', {
-            title: {
-                describe: 'Title of note',
+            os: {
+                describe: 'Pick operating system',
                 demand: true,
-                alias: 's'
+                alias: 'os'
             },
-            body: {
-                describe: 'Note content',
+            language: {
+                describe: 'Choose programming language',
                 demand: true,
-                alias: 'b'
+                alias: 'l'
+            },
+            order: {
+                describe: 'asc or dec order',
+                demand: true,
+                alias: 'o'
             }
         })
             .help();
     };
+    // pass command line input to CLI class
     App.prototype.handleCommand = function () {
-        console.log(this.command);
-        console.log(yargs.argv);
-        // pass command to cli class
-        // use cli class to make a api call using the api class
+        if (this.command === 'search') {
+            cli_1.default.saveCommandLineInputs(this.command, yargs.argv);
+            cli_1.default.getMatchingIssues();
+        }
     };
     return App;
 }());

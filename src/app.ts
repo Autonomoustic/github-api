@@ -11,7 +11,7 @@ import cli from './controllers/cli';
 class App {
 
   public express: express.Application;
-  public command: String;
+  public command: string;
 
   constructor () {
     this.express = express()
@@ -20,28 +20,35 @@ class App {
     this.handleCommand()
   }
 
+  // list of available commands
   commandList () {
     yargs
     .command('search', 'search stuff', {
-      title: {
-        describe: 'Title of note',
+      os: {
+        describe: 'Pick operating system',
         demand: true,
-        alias: 's'
+        alias: 'os'
       },
-      body: {
-        describe: 'Note content',
+      language: {
+        describe: 'Choose programming language',
         demand: true,
-        alias: 'b'
+        alias: 'l'
+      },
+      order: {
+        describe: 'asc or dec order',
+        demand: true,
+        alias: 'o'
       }
     })
     .help()
   }
 
+  // pass command line input to CLI class
   handleCommand () {
-    console.log(this.command)
-    console.log(yargs.argv)
-    // pass command to cli class
-    // use cli class to make a api call using the api class
+    if (this.command === 'search'){
+      cli.saveCommandLineInputs(this.command, yargs.argv)
+      cli.getMatchingIssues()
+    }
   }
 
 

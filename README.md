@@ -1,9 +1,20 @@
 start the app
 
-- build and run the project
+- build project
 
 ```
 npm run tsc
-npm run start
+
+```
+
+run app.js file with a 'search' command and the following flags.
+
+--os (e.g. windows, macos)
+--language (a programming language of your choice)
+--order (either 'asc' or 'dec' order)
+
+- example
+```
+node build/src/app.js search --os=macos --language=javascript --order=asc
 
 ```
