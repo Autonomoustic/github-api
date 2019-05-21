@@ -48,12 +48,12 @@ var Api = /** @class */ (function () {
             var result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(os, language, order);
-                        console.log(process.env.BASE_URL);
-                        return [4 /*yield*/, axios_1.default.get(process.env.BASE_URL + ("/search/issues?q=" + os + "+label:bug+language:" + language + "+state:open&sort=created&order=" + order))];
+                    case 0: return [4 /*yield*/, axios_1.default.get(process.env.BASE_URL + ("/search/issues?q=" + os + "+label:bug+language:" + language + "+state:open&sort=created&order=" + order))
+                        // save result to OUTPUT.text file
+                    ];
                     case 1:
                         result = _a.sent();
+                        // save result to OUTPUT.text file
                         fs.writeFile('OUTPUT.txt', JSON.stringify(result.data), function (err) {
                             if (err)
                                 throw err;

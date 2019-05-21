@@ -46,8 +46,10 @@ class App {
   // pass command line input to CLI class
   handleCommand () {
     if (this.command === 'search'){
-      cli.saveCommandLineInputs(this.command, yargs.argv)
-      cli.getMatchingIssues()
+      cli.saveCommandLineInputs(yargs.argv)
+    } else {
+      console.log('  invalid command input')
+      return
     }
   }
 

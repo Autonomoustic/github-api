@@ -1,6 +1,5 @@
 import api from './api';
 
-
 interface argvObject {
   os: string;
   language: string;
@@ -9,13 +8,11 @@ interface argvObject {
 
 class Cli {
 
-  public command: string;
   public os: string;
   public language: string;
   public order: string;
 
   constructor () {
-    this.command = ''
     this.os = ''
     this.language = ''
     this.order = ''
@@ -23,23 +20,41 @@ class Cli {
 
 
   // set variables to be passed to API class
-  saveCommandLineInputs (command : string, argv : argvObject) {
-    if (command === 'search') {
-      this.command = command
+  saveCommandLineInputs (argv : argvObject) {
+    if (['macos','windows', 'linux'].includes(argv.os)) {
       this.os = argv.os
+    } else {
+      console.log("  please enter a valid OS e.g. macos, windows, linux")
+      return
+    }
+
+    if (
+      ['javascript',
+      'python',
+      'c++',
+      'java',
+      'php'].includes(argv.language)
+    ) {
       this.language = argv.language
+    } else {
+      console.log("  enter a valid programming language")
+      return
+    }
+
+    if (['asc', 'dec'].includes(argv.order)) {
       this.order = argv.order
     } else {
-      console.log(" unavailable command input")
+      console.log("   enter a valid order 'asc' or 'dec'")
+      return
     }
+
+    this.getMatchingIssues()
   }
 
-  // make api call 
+  // make api call
   getMatchingIssues () {
     api.getIssues(this.os, this.language, this.order)
   }
-
-
 
 }
 

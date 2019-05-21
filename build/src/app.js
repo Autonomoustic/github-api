@@ -42,8 +42,11 @@ var App = /** @class */ (function () {
     // pass command line input to CLI class
     App.prototype.handleCommand = function () {
         if (this.command === 'search') {
-            cli_1.default.saveCommandLineInputs(this.command, yargs.argv);
-            cli_1.default.getMatchingIssues();
+            cli_1.default.saveCommandLineInputs(yargs.argv);
+        }
+        else {
+            console.log('  invalid command input');
+            return;
         }
     };
     return App;

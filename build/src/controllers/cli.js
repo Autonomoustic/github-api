@@ -6,24 +6,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var api_1 = __importDefault(require("./api"));
 var Cli = /** @class */ (function () {
     function Cli() {
-        this.command = '';
         this.os = '';
         this.language = '';
         this.order = '';
     }
     // set variables to be passed to API class
-    Cli.prototype.saveCommandLineInputs = function (command, argv) {
-        if (command === 'search') {
-            this.command = command;
+    Cli.prototype.saveCommandLineInputs = function (argv) {
+        if (['macos', 'windows', 'linux'].includes(argv.os)) {
+            console.log('    match');
             this.os = argv.os;
+        }
+        else {
+            console.log("  please enter a valid OS e.g. macos, windows, linux");
+            return;
+        }
+        if (['javascript',
+            'python',
+            'c++',
+            'java',
+            'php'].includes(argv.language)) {
             this.language = argv.language;
+        }
+        else {
+            console.log("  enter a valid programming language");
+            return;
+        }
+        if (['asc', 'dec'].includes(argv.order)) {
             this.order = argv.order;
         }
         else {
-            console.log(" unavailable command input");
+            console.log("   enter a valid order 'asc' or 'dec'");
+            return;
         }
+        this.getMatchingIssues();
     };
-    //
+    // make api call
     Cli.prototype.getMatchingIssues = function () {
         api_1.default.getIssues(this.os, this.language, this.order);
     };
